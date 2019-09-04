@@ -18,15 +18,21 @@ routes.put('/users', authMiddleware, UserController.update);
 
 routes.post('/sessions', SessionController.store);
 
-routes.get('/providers', ProviderController.index);
+routes.get('/providers', authMiddleware, ProviderController.index);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/appointments', authMiddleware, AppointmentController.store);
 routes.get('/appointments', authMiddleware, AppointmentController.index);
+routes.delete(
+  '/appointments/:id',
+  authMiddleware,
+  AppointmentController.delete
+);
 
 routes.get('/schedules', authMiddleware, ScheduleController.index);
 
 routes.get('/notifications', authMiddleware, NotificationController.index);
+routes.get('/notifications/:id', authMiddleware, NotificationController.update);
 
 export default routes;
